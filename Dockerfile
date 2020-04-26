@@ -20,4 +20,14 @@ RUN \
   sed -i 's/^UPnPEnabled=0$/UPnPEnabled=1/' ~/.aMule/amule.conf && \
   nl ~/.aMule/amule.conf
 
+# Configure amuleweb and write configuration file with some defaults.
+RUN \
+  amuleweb --verbose \
+    --password amule \
+    --allow-guest --guest-pass=guest \
+    --admin-pass=admin \
+    --enable-gzip \
+    --write-config \
+  && nl ~/.aMule/remote.conf
+
 ENTRYPOINT [ "amuled", "--log-stdout" ]
